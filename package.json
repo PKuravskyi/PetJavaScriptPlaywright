@@ -1,0 +1,16 @@
+{
+  "name": "petjavascriptplaywright",
+  "version": "1.0.0",
+  "description": "Pet repository for practicing testing with JavaScript and Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Pavlo Kuravskyi",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.11.0"
+  }
+}
