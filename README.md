@@ -1,1 +1,1 @@
-Pet JavaScript project for practicing testing with Playwright
+Pet repository for practicing testing with JavaScript and Playwright
