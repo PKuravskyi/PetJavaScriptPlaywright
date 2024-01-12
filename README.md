@@ -1,0 +1,1 @@
+Pet JavaScript project for practicing testing with Playwright
