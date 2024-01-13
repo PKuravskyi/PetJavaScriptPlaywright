@@ -10,7 +10,7 @@ test.describe('Arts page', () => {
 		await artsPage.visit('http://localhost:2221');
 	});
 
-	test('Verify art art can be added to basket', async ({ page }) => {
+	test('Verify art can be added to basket', async ({ page }) => {
 		await expect(artsPage.basketCounterEl).toHaveText('0');
 		artsPage.addArtToBasket('Mountain Landscape');
 		await expect(artsPage.basketCounterEl).toHaveText('1');
