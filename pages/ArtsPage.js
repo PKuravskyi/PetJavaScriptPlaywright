@@ -7,19 +7,14 @@ export class ArtsPage extends BasePage {
 		super(page);
 	}
 
-	addArtToBasket = async artName => {
-		const artAddToBasketBtn = await this.page.locator(
+	artHandler = async (option, artName) => {
+		const basketBtn = await this.page.locator(
 			`//*[text()="${artName}"]/..//button/div`
 		);
-		await artAddToBasketBtn.click();
-		await expect(artAddToBasketBtn).toHaveText('Remove from Basket');
+		await basketBtn.click();
+		await expect(basketBtn).toHaveText(`${option} Basket`);
 	};
 
-	removeArtFromBasket = async artName => {
-		const artAddToBasketBtn = await this.page.locator(
-			`//*[text()="${artName}"]/..//button/div`
-		);
-		await artAddToBasketBtn.click();
-		await expect(artAddToBasketBtn).toHaveText('Add to Basket');
-	};
+	addArtToBasket = async artName => await this.artHandler('Remove from', artName);
+	removeArtFromBasket = async artName => await this.artHandler('Add to', artName);
 }

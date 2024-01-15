@@ -7,20 +7,24 @@ test.describe('Arts page', () => {
 
 	test.beforeEach(async ({ page }) => {
 		artsPage = new ArtsPage(page);
-		await artsPage.visit('http://localhost:2221');
+		await artsPage.goToHomepage();
 	});
 
 	test('Verify art can be added to basket', async ({ page }) => {
 		await expect(artsPage.basketCounterEl).toHaveText('0');
-		artsPage.addArtToBasket('Mountain Landscape');
+		await artsPage.addArtToBasket('Mountain Landscape');
 		await expect(artsPage.basketCounterEl).toHaveText('1');
+		await artsPage.addArtToBasket('Baby Zebra with butterfly');
+		await expect(artsPage.basketCounterEl).toHaveText('2');
 	});
 
 	test('Verify art can be removed from basket', async ({ page }) => {
-		await expect(artsPage.basketCounterEl).toHaveText('0');
-		artsPage.addArtToBasket('Mountain Landscape');
+		await artsPage.addArtToBasket('Mountain Landscape');
+		await artsPage.addArtToBasket('Young Man in hot air balloon');
+		await expect(artsPage.basketCounterEl).toHaveText('2');
+		await artsPage.removeArtFromBasket('Mountain Landscape');
 		await expect(artsPage.basketCounterEl).toHaveText('1');
-		artsPage.removeArtFromBasket('Mountain Landscape');
+		await artsPage.removeArtFromBasket('Young Man in hot air balloon');
 		await expect(artsPage.basketCounterEl).toHaveText('0');
 	});
 });
