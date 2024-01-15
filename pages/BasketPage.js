@@ -2,12 +2,13 @@ import { expect } from '@playwright/test';
 
 import { BasePage } from './BasePage';
 
-export class CheckoutPage extends BasePage {
+export class BasketPage extends BasePage {
 	constructor(page) {
 		super(page);
 
 		this.basketCardEls = page.locator('[data-qa="basket-card"]');
 		this.basketCardRemoveItemBtns = page.locator('.basket-card-remove-item');
+		this.continueToCheckoutBtn = page.locator('.continue-to-checkout');
 	}
 
 	removeCheapestArt = async () => {
