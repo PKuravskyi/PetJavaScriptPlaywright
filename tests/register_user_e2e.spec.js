@@ -4,7 +4,7 @@ import { BasePage } from '../pages/BasePage';
 
 test.beforeEach(async ({ page }) => {
 	const basePage = new BasePage(page);
-	await basePage.visit('http://localhost:2221/my-account');
+	await basePage.goToPage('my-account');
 });
 
 test.describe('My Account page', () => {
