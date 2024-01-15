@@ -2,21 +2,18 @@ import { test, expect } from '@playwright/test';
 
 import { ArtsPage } from '../pages/ArtsPage';
 import { BasketPage } from '../pages/BasketPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
 import { LoginPage } from '../pages/LoginPage';
 import { SignUpPage } from '../pages/SignUpPage';
 
 test.describe('Checkout page', () => {
 	let artsPage;
 	let basketPage;
-	let checkoutPage;
 	let loginPage;
 	let signUpPage;
 
 	test.beforeEach(async ({ page }) => {
 		artsPage = new ArtsPage(page);
 		basketPage = new BasketPage(page);
-		checkoutPage = new CheckoutPage(page);
 		loginPage = new LoginPage(page);
 		signUpPage = new SignUpPage(page);
 		await page.goto('http://localhost:2221');
