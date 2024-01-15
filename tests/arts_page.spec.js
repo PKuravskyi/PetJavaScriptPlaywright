@@ -7,7 +7,7 @@ test.describe('Arts page', () => {
 
 	test.beforeEach(async ({ page }) => {
 		artsPage = new ArtsPage(page);
-		await artsPage.goToHomepage();
+		await page.goto('http://localhost:2221');
 	});
 
 	test('Verify art can be added to basket', async () => {

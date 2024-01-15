@@ -10,4 +10,7 @@ export class BasePage {
 	goToPage = async page => await this.page.goto(this.baseURL + page);
 
 	getBasketItemsCount = async () => +(await this.basketCounterEl.textContent());
+
+	goToCheckout = async () =>
+		await this.page.getByRole('link', { name: 'Checkout' }).click();
 }

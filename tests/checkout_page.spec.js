@@ -2,25 +2,36 @@ import { test, expect } from '@playwright/test';
 
 import { ArtsPage } from '../pages/ArtsPage';
 import { BasketPage } from '../pages/BasketPage';
+import { CheckoutPage } from '../pages/CheckoutPage';
+import { LoginPage } from '../pages/LoginPage';
+import { SignUpPage } from '../pages/SignUpPage';
 
 test.describe('Checkout page', () => {
 	let artsPage;
 	let basketPage;
+	let checkoutPage;
+	let loginPage;
+	let signUpPage;
 
 	test.beforeEach(async ({ page }) => {
 		artsPage = new ArtsPage(page);
 		basketPage = new BasketPage(page);
+		checkoutPage = new CheckoutPage(page);
+		loginPage = new LoginPage(page);
+		signUpPage = new SignUpPage(page);
 		await page.goto('http://localhost:2221');
 	});
 
-	test('Verify arts can be removed from basket', async ({ page }) => {
+	test('Verify unregistered user can go to checkout', async ({ page }) => {
 		await artsPage.addArtToBasket('Mountain Landscape');
 		await artsPage.addArtToBasket('Baby Zebra with butterfly');
 		await artsPage.addArtToBasket('Astronaut dabbing');
-		await artsPage.goToPage('basket');
-		await basketPage.removeCheapestArt();
-		expect(await basketPage.getBasketItemsCount()).toEqual(2);
-		await basketPage.removeCheapestArt();
-		expect(await basketPage.getBasketItemsCount()).toEqual(1);
+		await artsPage.goToCheckout();
+		await basketPage.continueToCheckoutBtn.click();
+		await loginPage.registerBtn.click();
+		await signUpPage.emailInputEl.fill('auto_user' + `${new Date().getTime()}`);
+		await signUpPage.passwordInputEl.fill('test123456');
+		await signUpPage.registerBtn.click();
+		await expect(page).toHaveURL(/.*delivery-details/);
 	});
 });

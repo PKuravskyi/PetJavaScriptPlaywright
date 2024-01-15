@@ -10,7 +10,7 @@ test.describe('Sign up page', () => {
 	test.beforeEach(async ({ page }) => {
 		signUpPage = new SignUpPage(page);
 		artsPage = new ArtsPage(page);
-		await signUpPage.goToPage('signup');
+		await page.goto('http://localhost:2221/signup');
 	});
 
 	test('register new user', async ({ page }) => {
