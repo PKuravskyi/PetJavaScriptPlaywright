@@ -13,7 +13,7 @@ test.describe('Checkout page', () => {
 		await page.goto('http://localhost:2221');
 	});
 
-	test('Verify arts can be removed from basket', async ({ page }) => {
+	test('Verify arts can be removed from basket', async () => {
 		await artsPage.addArtToBasket('Mountain Landscape');
 		await artsPage.addArtToBasket('Baby Zebra with butterfly');
 		await artsPage.addArtToBasket('Astronaut dabbing');

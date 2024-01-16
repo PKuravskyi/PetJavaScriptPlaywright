@@ -25,18 +25,18 @@ test.describe('Checkout page', () => {
 		await artsPage.addArtToBasket('Baby Zebra with butterfly');
 		await artsPage.addArtToBasket('Astronaut dabbing');
 		await artsPage.goToCheckout();
-		await basketPage.continueToCheckoutBtn.click();
-		await loginPage.registerBtn.click();
-		await signUpPage.emailInputEl.fill('auto_user' + `${new Date().getTime()}`);
-		await signUpPage.passwordInputEl.fill('test123456');
-		await signUpPage.registerBtn.click();
+		await basketPage.clickContinueToCheckout();
+		await loginPage.clickRegister();
+		await signUpPage.inputRandomEmail();
+		await signUpPage.inputRandomPassword();
+		await signUpPage.clickRegister();
 	});
 
 	test('Verify user can go to checkout after registering', async ({ page }) => {
 		await expect(page).toHaveURL(/.*delivery-details/);
 	});
 
-	test('Verify user can fill in delivery details', async ({ page }) => {
+	test('Verify user can fill out delivery details', async ({ page }) => {
 		await deliveryDetailsPage.inputRandomFirstName();
 		await deliveryDetailsPage.inputRandomLastName();
 		await deliveryDetailsPage.inputRandomStreet();

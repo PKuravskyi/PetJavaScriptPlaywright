@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 import { BasePage } from './BasePage';
 
 export class SignUpPage extends BasePage {
@@ -7,4 +9,16 @@ export class SignUpPage extends BasePage {
 		this.passwordInputEl = page.getByPlaceholder('Password');
 		this.registerBtn = page.locator('//div[text()="Register"]');
 	}
+
+	inputRandomEmail = async () => {
+		await this.emailInputEl.fill(faker.internet.email());
+	};
+
+	inputRandomPassword = async () => {
+		await this.passwordInputEl.fill(faker.internet.password());
+	};
+
+	clickRegister = async () => {
+		await this.registerBtn.click();
+	};
 }

@@ -5,4 +5,8 @@ export class LoginPage extends BasePage {
 		super(page);
 		this.registerBtn = page.locator('.go-to-signup-button');
 	}
+
+	clickRegister = async () => {
+		await this.registerBtn.click();
+	};
 }

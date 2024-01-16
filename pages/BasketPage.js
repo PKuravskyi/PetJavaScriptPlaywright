@@ -23,4 +23,8 @@ export class BasketPage extends BasePage {
 		await this.basketCardRemoveItemBtns.nth(cheapestPriceIdx).click();
 		await this.page.waitForTimeout(500);
 	};
+
+	clickContinueToCheckout = async () => {
+		await this.continueToCheckoutBtn.click();
+	};
 }

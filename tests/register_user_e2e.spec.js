@@ -13,10 +13,10 @@ test.describe('Sign up page', () => {
 		await page.goto('http://localhost:2221/signup');
 	});
 
-	test('register new user', async ({ page }) => {
-		await signUpPage.emailInputEl.fill('auto_user' + `${new Date().getTime()}`);
-		await signUpPage.passwordInputEl.fill('test123456');
-		await signUpPage.registerBtn.click();
+	test('register new user', async () => {
+		await signUpPage.inputRandomEmail();
+		await signUpPage.inputRandomPassword();
+		await signUpPage.clickRegister();
 		expect(artsPage.productCardEls).toBeTruthy();
 	});
 });
