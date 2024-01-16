@@ -5,6 +5,7 @@ import { BasketPage } from '../pages/BasketPage';
 import { LoginPage } from '../pages/LoginPage';
 import { SignUpPage } from '../pages/SignUpPage';
 import { DeliveryDetailsPage } from '../pages/checkout/DeliveryDetailsPage';
+import { PaymentPage } from '../pages/checkout/PaymentPage';
 
 test.describe('Checkout page', () => {
 	let artsPage;
@@ -12,6 +13,7 @@ test.describe('Checkout page', () => {
 	let loginPage;
 	let signUpPage;
 	let deliveryDetailsPage;
+	let paymentPage;
 
 	test.beforeEach(async ({ page }) => {
 		artsPage = new ArtsPage(page);
@@ -19,6 +21,7 @@ test.describe('Checkout page', () => {
 		loginPage = new LoginPage(page);
 		signUpPage = new SignUpPage(page);
 		deliveryDetailsPage = new DeliveryDetailsPage(page);
+		paymentPage = new PaymentPage(page);
 
 		await page.goto('http://localhost:2221');
 		await artsPage.addArtToBasket('Mountain Landscape');
@@ -47,7 +50,7 @@ test.describe('Checkout page', () => {
 		await expect(page).toHaveURL(/.*payment/);
 	});
 
-	test('Verify user can save delivery details', async () => {
+	test('Verify user can save delivery details address', async () => {
 		await deliveryDetailsPage.inputRandomFirstName();
 		await deliveryDetailsPage.inputRandomLastName();
 		await deliveryDetailsPage.inputRandomStreet();
@@ -56,5 +59,17 @@ test.describe('Checkout page', () => {
 		await deliveryDetailsPage.selectCountry('Ukraine');
 		await deliveryDetailsPage.clickSaveAddress();
 		await deliveryDetailsPage.verifyNewlySavedAddress();
+	});
+
+	test('Verify user can get a discount', async () => {
+		await deliveryDetailsPage.inputRandomFirstName();
+		await deliveryDetailsPage.inputRandomLastName();
+		await deliveryDetailsPage.inputRandomStreet();
+		await deliveryDetailsPage.inputRandomPostCode();
+		await deliveryDetailsPage.inputRandomCity();
+		await deliveryDetailsPage.selectCountry('Ukraine');
+		await deliveryDetailsPage.clickContinueToPayment();
+		await paymentPage.inputDiscountCode();
+		await paymentPage.clickSubmitDiscount();
 	});
 });
