@@ -46,4 +46,15 @@ test.describe('Checkout page', () => {
 		await deliveryDetailsPage.clickContinueToPayment();
 		await expect(page).toHaveURL(/.*payment/);
 	});
+
+	test('Verify user can save delivery details', async () => {
+		await deliveryDetailsPage.inputRandomFirstName();
+		await deliveryDetailsPage.inputRandomLastName();
+		await deliveryDetailsPage.inputRandomStreet();
+		await deliveryDetailsPage.inputRandomPostCode();
+		await deliveryDetailsPage.inputRandomCity();
+		await deliveryDetailsPage.selectCountry('Ukraine');
+		await deliveryDetailsPage.clickSaveAddress();
+		await deliveryDetailsPage.verifyNewlySavedAddress();
+	});
 });

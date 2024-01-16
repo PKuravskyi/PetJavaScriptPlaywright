@@ -25,7 +25,7 @@ export class ArtsPage extends BasePage {
 		await this.artHandler('Add to', artName);
 
 	sortBy = async value => {
-		await this.page.selectOption('.sort-dropdown', { value: value });
+		await this.sortDropdown.selectOption({ value: value });
 	};
 
 	verifyArtsSortedBy = async sortType => {
