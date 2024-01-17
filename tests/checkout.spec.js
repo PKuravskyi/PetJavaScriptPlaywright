@@ -26,11 +26,16 @@ test.describe('Checkout page', () => {
 		paymentPage = new PaymentPage(page);
 		thankYouPage = new ThankYouPage(page);
 
+		const isDesktopViewport = () => page.viewportSize().width >= 600;
+
 		await page.goto('http://localhost:2221');
 		await artsPage.addArtToBasket('Mountain Landscape');
 		await artsPage.addArtToBasket('Baby Zebra with butterfly');
 		await artsPage.addArtToBasket('Astronaut dabbing');
-		await artsPage.goToCheckout();
+		if (!isDesktopViewport()) {
+			await artsPage.openHamburgerMenu();
+		}
+		await artsPage.clickCheckout();
 		await basketPage.clickContinueToCheckout();
 		await loginPage.clickRegister();
 		await signUpPage.inputRandomEmail();
