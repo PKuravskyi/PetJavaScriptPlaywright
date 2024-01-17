@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 
 import { BaseCheckoutPage } from './BaseCheckoutPage';
 
@@ -18,6 +19,12 @@ export class PaymentPage extends BaseCheckoutPage {
 			.locator('.discount-code');
 		this.discountCodeInput = page.getByPlaceholder('Discount code');
 		this.submitDiscountBtn = page.locator('.submit-discount-button');
+
+		this.creditCardOwnerInput = page.getByPlaceholder('Credit card owner');
+		this.creditCardNumberInput = page.getByPlaceholder('Credit card number');
+		this.validUntilInput = page.getByPlaceholder('Valid until');
+		this.creditCardCVCInput = page.getByPlaceholder('Credit card CVC');
+		this.payBtn = page.locator('.pay-button');
 	}
 
 	inputDiscountCode = async () => {
@@ -31,9 +38,38 @@ export class PaymentPage extends BaseCheckoutPage {
 		await this.submitDiscountBtn.click();
 	};
 
+	inputCreditCardOwner = async () => {
+		await this.creditCardOwnerInput.fill(faker.person.fullName());
+	};
+
+	inputCreditCardNumber = async () => {
+		await this.creditCardNumberInput.fill(faker.finance.accountNumber(16));
+	};
+
+	inputValidUntil = async () => {
+		let randomMonth = faker.number.int({ min: 1, max: 12 });
+		randomMonth =
+			randomMonth.toString().length === 1 ? '0' + randomMonth : randomMonth;
+
+		const randomYear = faker.number.int({
+			min: new Date().getFullYear() % 100,
+			max: 99,
+		});
+
+		await this.validUntilInput.fill(`${randomMonth}${randomYear}`);
+	};
+
+	inputCreditCardCVC = async () => {
+		await this.creditCardCVCInput.fill(faker.finance.creditCardCVV());
+	};
+
+	clickPay = async () => {
+		await this.payBtn.click();
+	};
+
 	verifyDiscountPrice = async () => {
 		const totalAmount = +(await this.totalLabel.innerText()).replace('$', '');
-		
+
 		const discountPercentage = +(
 			await this.discountPercentageLabel.innerText()
 		).match(/\d+/);
