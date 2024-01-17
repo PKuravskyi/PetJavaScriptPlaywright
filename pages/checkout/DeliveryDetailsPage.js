@@ -27,10 +27,10 @@ export class DeliveryDetailsPage extends BaseCheckoutPage {
 		this.savedAddressPostCodeLabel = this.savedAddressList.locator(
 			'.saved-address-postcode'
 		);
-		this.savedAddressCityLable = this.savedAddressList.locator(
+		this.savedAddressCityLabel = this.savedAddressList.locator(
 			'.saved-address-city'
 		);
-		this.savedAddressCountryLable = this.savedAddressList.locator(
+		this.savedAddressCountryLabel = this.savedAddressList.locator(
 			'.saved-address-country'
 		);
 		this.continueToPaymentBtn = page.locator('.continue-to-payment-button');
@@ -85,11 +85,11 @@ export class DeliveryDetailsPage extends BaseCheckoutPage {
 			await this.postCodeInput.inputValue()
 		);
 
-		expect(await this.savedAddressCityLable.first().innerText()).toBe(
+		expect(await this.savedAddressCityLabel.first().innerText()).toBe(
 			await this.cityInput.inputValue()
 		);
 
-		expect(await this.savedAddressCountryLable.first().innerText()).toEqual(
+		expect(await this.savedAddressCountryLabel.first().innerText()).toEqual(
 			await this.countryDropdown.inputValue()
 		);
 	};

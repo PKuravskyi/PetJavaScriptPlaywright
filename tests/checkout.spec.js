@@ -71,5 +71,6 @@ test.describe('Checkout page', () => {
 		await deliveryDetailsPage.clickContinueToPayment();
 		await paymentPage.inputDiscountCode();
 		await paymentPage.clickSubmitDiscount();
+		await paymentPage.verifyDiscountPrice();
 	});
 });
