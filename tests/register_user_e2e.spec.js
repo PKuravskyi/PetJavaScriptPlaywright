@@ -5,7 +5,7 @@ test.describe('Sign up page', () => {
 		await page.goto('http://localhost:2221/signup');
 	});
 
-	test('register new user', async ({ signUpPage, artsPage }) => {
+	test('Verify new user can be registered', async ({ signUpPage, artsPage }) => {
 		await signUpPage.inputRandomEmail();
 		await signUpPage.inputRandomPassword();
 		await signUpPage.clickRegister();
