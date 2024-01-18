@@ -19,7 +19,7 @@ jobs:
       - name: Run tests
         run: |
           echo 'Starting the Shopping Store app'
-          chhomd +x './ShoppingStoreApp/shopping-store-linux-amd64'
+          chmod +x './ShoppingStoreApp/shopping-store-linux-amd64'
           ./ShoppingStoreApp/shopping-store-linux-amd64 &
           echo 'Installing dependencies from lockfile'
           npm ci
