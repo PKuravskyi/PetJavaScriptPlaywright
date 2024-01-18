@@ -1,31 +1,7 @@
-import { test, expect } from '@playwright/test';
-
-import { ArtsPage } from '../pages/ArtsPage';
-import { BasketPage } from '../pages/BasketPage';
-import { LoginPage } from '../pages/LoginPage';
-import { SignUpPage } from '../pages/SignUpPage';
-import { DeliveryDetailsPage } from '../pages/checkout/DeliveryDetailsPage';
-import { PaymentPage } from '../pages/checkout/PaymentPage';
-import { ThankYouPage } from '../pages/checkout/ThankYouPage';
+import { test, expect } from '../pages/pageFixtures';
 
 test.describe('Checkout page', () => {
-	let artsPage;
-	let basketPage;
-	let loginPage;
-	let signUpPage;
-	let deliveryDetailsPage;
-	let paymentPage;
-	let thankYouPage;
-
-	test.beforeEach(async ({ page }) => {
-		artsPage = new ArtsPage(page);
-		basketPage = new BasketPage(page);
-		loginPage = new LoginPage(page);
-		signUpPage = new SignUpPage(page);
-		deliveryDetailsPage = new DeliveryDetailsPage(page);
-		paymentPage = new PaymentPage(page);
-		thankYouPage = new ThankYouPage(page);
-
+	test.beforeEach(async ({ page, artsPage, basketPage, loginPage, signUpPage }) => {
 		const isDesktopViewport = () => page.viewportSize().width >= 600;
 
 		await page.goto('http://localhost:2221');
@@ -47,7 +23,10 @@ test.describe('Checkout page', () => {
 		await expect(page).toHaveURL(/.*delivery-details/);
 	});
 
-	test('Verify user can fill out delivery details', async ({ page }) => {
+	test('Verify user can fill out delivery details', async ({
+		page,
+		deliveryDetailsPage,
+	}) => {
 		await deliveryDetailsPage.inputRandomFirstName();
 		await deliveryDetailsPage.inputRandomLastName();
 		await deliveryDetailsPage.inputRandomStreet();
@@ -58,7 +37,9 @@ test.describe('Checkout page', () => {
 		await expect(page).toHaveURL(/.*payment/);
 	});
 
-	test('Verify user can save delivery details address', async () => {
+	test('Verify user can save delivery details address', async ({
+		deliveryDetailsPage,
+	}) => {
 		await deliveryDetailsPage.inputRandomFirstName();
 		await deliveryDetailsPage.inputRandomLastName();
 		await deliveryDetailsPage.inputRandomStreet();
@@ -69,7 +50,10 @@ test.describe('Checkout page', () => {
 		await deliveryDetailsPage.verifyNewlySavedAddress();
 	});
 
-	test('Verify user can get a discount', async () => {
+	test('Verify user can get a discount', async ({
+		deliveryDetailsPage,
+		paymentPage,
+	}) => {
 		await deliveryDetailsPage.inputRandomFirstName();
 		await deliveryDetailsPage.inputRandomLastName();
 		await deliveryDetailsPage.inputRandomStreet();
@@ -82,7 +66,11 @@ test.describe('Checkout page', () => {
 		await paymentPage.verifyDiscountPrice();
 	});
 
-	test('Verify user can input credit card details and finish buying process', async () => {
+	test('Verify user can input credit card details and finish buying process', async ({
+		deliveryDetailsPage,
+		paymentPage,
+		thankYouPage,
+	}) => {
 		await deliveryDetailsPage.inputRandomFirstName();
 		await deliveryDetailsPage.inputRandomLastName();
 		await deliveryDetailsPage.inputRandomStreet();

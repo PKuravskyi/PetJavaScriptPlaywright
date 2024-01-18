@@ -1,26 +1,23 @@
-import { test } from '@playwright/test';
+import { test } from '../pages/pageFixtures';
 
-import { MyAccountPage } from '../pages/MyAccountPage.spec';
 import { LoginEndpoint } from '../services/endpoints/LoginEndpoint';
 
 test.describe('My account page', () => {
-	let myAccountPage;
 	let loginEndpoint;
 
 	test.beforeEach(async ({ page }) => {
-		myAccountPage = new MyAccountPage(page);
 		loginEndpoint = new LoginEndpoint(page);
 
 		await page.goto('http://localhost:2221');
 	});
 
-	test('Verify login via BE', async () => {
+	test('Verify login via BE', async ({ myAccountPage }) => {
 		await loginEndpoint.login();
 		await myAccountPage.goToPage('my-account');
 		await myAccountPage.verifyUserIsLoggedIn();
 	});
 
-	test('Verify login via BE with mocked request', async () => {
+	test('Verify login via BE with mocked request', async ({ myAccountPage }) => {
 		await loginEndpoint.login('withMockedRequest');
 		await myAccountPage.goToPage('my-account');
 		await myAccountPage.verifyMockedErrorMessage();
