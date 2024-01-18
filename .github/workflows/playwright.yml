@@ -5,8 +5,8 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  tests:
-    timeout-minutes: 60
+  test:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.40.0-jammy
@@ -16,12 +16,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run tests
+      - name: Start the Shopping Store app
         run: |
-          echo 'Starting the Shopping Store app'
           chmod +x './ShoppingStoreApp/shopping-store-linux-amd64'
           ./ShoppingStoreApp/shopping-store-linux-amd64 &
-          echo 'Installing dependencies from lockfile'
-          npm ci
-          echo 'Running playwright tests'
-          npm run tests
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run tests
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
