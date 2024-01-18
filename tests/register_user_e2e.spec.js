@@ -9,6 +9,6 @@ test.describe('Sign up page', () => {
 		await signUpPage.inputRandomEmail();
 		await signUpPage.inputRandomPassword();
 		await signUpPage.clickRegister();
-		expect(artsPage.productCardEls).toBeTruthy();
+		await artsPage.verifyArtsPresence();
 	});
 });

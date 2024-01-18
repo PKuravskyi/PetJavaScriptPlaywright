@@ -51,4 +51,8 @@ export class ArtsPage extends BasePage {
 
 		expect(isSortedCorrectly).toBeTruthy();
 	};
+
+	verifyArtsPresence = async () => {
+		await expect(this.productCardEls.nth(0)).toBeVisible();
+	};
 }

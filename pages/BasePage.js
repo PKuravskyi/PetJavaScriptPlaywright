@@ -1,3 +1,5 @@
+import { expect } from '@playwright/test';
+
 export class BasePage {
 	constructor(page) {
 		this.page = page;
@@ -20,5 +22,9 @@ export class BasePage {
 	waitToClick = async element => {
 		await element.waitFor();
 		await element.click();
+	};
+
+	verifyBasketItemsCount = async count => {
+		expect(await this.getBasketItemsCount()).toEqual(count);
 	};
 }

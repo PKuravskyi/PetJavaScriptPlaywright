@@ -1,4 +1,4 @@
-import { test, expect } from '../pages/pageFixtures';
+import { test } from '../pages/pageFixtures';
 
 test.describe('Checkout page', () => {
 	test.beforeEach(async ({ page }) => await page.goto('http://localhost:2221'));
@@ -12,8 +12,8 @@ test.describe('Checkout page', () => {
 		await artsPage.addArtToBasket('Astronaut dabbing');
 		await artsPage.goToPage('basket');
 		await basketPage.removeCheapestArt();
-		expect(await basketPage.getBasketItemsCount()).toEqual(2);
+		await basketPage.verifyBasketItemsCount(2);
 		await basketPage.removeCheapestArt();
-		expect(await basketPage.getBasketItemsCount()).toEqual(1);
+		await basketPage.verifyBasketItemsCount(1);
 	});
 });
