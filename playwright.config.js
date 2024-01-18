@@ -19,9 +19,9 @@ module.exports = defineConfig({
 	/* Retry on CI only */
 	retries: process.env.CI ? 2 : 0,
 	/* Opt out of parallel tests on CI. */
-	workers: process.env.CI ? 3 : undefined,
+	workers: process.env.CI ? 5 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: 'html',
+	reporter: process.env.CI ? 'github' : 'html',
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
@@ -50,8 +50,8 @@ module.exports = defineConfig({
 
 		/* Test against mobile viewports. */
 		{
-		  name: 'Mobile Chrome',
-		  use: { ...devices['Pixel 5'] },
+			name: 'Mobile Chrome',
+			use: { ...devices['Pixel 5'] },
 		},
 		// {
 		//   name: 'Mobile Safari',
