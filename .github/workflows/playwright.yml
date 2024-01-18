@@ -16,14 +16,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Start the Shopping Store app
-        run: |
-          chmod +x './ShoppingStoreApp/shopping-store-linux-amd64'
-          ./ShoppingStoreApp/shopping-store-linux-amd64 &
       - name: Install dependencies
         run: npm ci
       - name: Run tests
-        run: npm run tests
+        run: |
+          chmod +x './ShoppingStoreApp/shopping-store-linux-amd64'
+            ./ShoppingStoreApp/shopping-store-linux-amd64 &
+          npm run tests
       - uses: actions/upload-artifact@v3
         if: always()
         with:
