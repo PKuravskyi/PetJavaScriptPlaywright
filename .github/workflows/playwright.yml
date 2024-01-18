@@ -5,11 +5,22 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  playwrighttests:
+  tests:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.40.0-jammy
+      env:
+        ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+        ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Say hello
-        run: echo Hello
+      - name: Run tests
+        run: |
+          echo 'Starting the Shopping Store app'
+          ./ShoppingStoreApp/shopping-store-linux-amd64 &
+          echo 'Installing dependencies from lockfile'
+          npm ci
+          echo 'Running playwright tests'
+          npm run tests
