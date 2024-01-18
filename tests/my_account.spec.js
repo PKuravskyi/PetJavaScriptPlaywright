@@ -17,6 +17,12 @@ test.describe('My account page', () => {
 	test('Verify login via BE', async () => {
 		await loginEndpoint.login();
 		await myAccountPage.goToPage('my-account');
-		await myAccountPage.verifyUserIsLoggedIn('admin');
+		await myAccountPage.verifyUserIsLoggedIn();
+	});
+
+	test('Verify login via BE with mocked request', async () => {
+		await loginEndpoint.login('withMockedRequest');
+		await myAccountPage.goToPage('my-account');
+		await myAccountPage.verifyMockedErrorMessage();
 	});
 });

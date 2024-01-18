@@ -7,13 +7,24 @@ export class LoginEndpoint extends BaseClientAPI {
 		super(page);
 	}
 
-	login = async () => {
+	login = async withMockedRequest => {
 		const payload = {
 			username: process.env.ADMIN_USERNAME,
 			password: process.env.ADMIN_PASSWORD,
 		};
-		console.log('Logging in ' + payload.username);
+
+		if (withMockedRequest) {
+			await this.page.route('**/api/user**', async route => {
+				await route.fulfill({
+					status: 500,
+					contentType: 'application/json',
+					body: JSON.stringify({ message: 'PLAYWRIGHT ERROR FROM MOCKING :)' }),
+				});
+			});
+		}
+
 		const response = await this.post(this.LOGIN_ENDPOINT, payload);
+
 		await this.page.evaluate(
 			([tokenValue]) => {
 				document.cookie = `token=${tokenValue}`;
