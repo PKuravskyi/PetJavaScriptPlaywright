@@ -8,7 +8,10 @@ export class LoginEndpoint extends BaseClientAPI {
 	}
 
 	login = async () => {
-		const payload = { username: 'admin', password: 'Admin123' };
+		const payload = {
+			username: process.env.ADMIN_USERNAME,
+			password: process.env.ADMIN_PASSWORD,
+		};
 		console.log('Logging in ' + payload.username);
 		const response = await this.post(this.LOGIN_ENDPOINT, payload);
 		await this.page.evaluate(
