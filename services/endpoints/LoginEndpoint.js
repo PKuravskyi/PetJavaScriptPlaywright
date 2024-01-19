@@ -1,7 +1,7 @@
 import { BaseClientAPI } from './BaseClientAPI';
 
 export class LoginEndpoint extends BaseClientAPI {
-	LOGIN_ENDPOINT = 'api/login';
+	LOGIN_ENDPOINT = 'login';
 
 	constructor(page) {
 		super(page);
