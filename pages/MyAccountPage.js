@@ -9,9 +9,11 @@ export class MyAccountPage extends BasePage {
 
 	visit = async () => await this.page.goto(this.baseUrl + 'my-account');
 
-	verifyUserIsLoggedIn = async () => {
+	verifyUserIsLoggedIn = async (user = false) => {
+		const username = user ? user : process.env.ADMIN_USERNAME;
+
 		await this.expect(
-			this.page.locator(`//*[text()='${process.env.ADMIN_USERNAME}']`)
+			this.page.locator(`//*[text()='${username}']`)
 		).toBeVisible();
 	};
 

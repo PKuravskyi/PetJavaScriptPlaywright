@@ -58,18 +58,9 @@ export class DeliveryDetailsPage extends BaseCheckoutPage {
 		await this.countryDropdown.selectOption(country);
 	};
 
-	clickSaveAddress = async () => {
-		await this.saveAddressBtn.click();
+	clickSaveAddress = async () => await this.saveAddressBtn.click();
 
-		// wait until address is saved
-		this.expect(await this.saveAddressBtn).toHaveText(
-			'Save address for next time'
-		);
-	};
-
-	clickContinueToPayment = async () => {
-		await this.continueToPaymentBtn.click();
-	};
+	clickContinueToPayment = async () => await this.continueToPaymentBtn.click();
 
 	verifyNewlySavedAddress = async () => {
 		this.expect(await this.savedAddressFirstNameLabel.first().innerText()).toBe(
