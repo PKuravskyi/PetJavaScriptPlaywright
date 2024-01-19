@@ -30,7 +30,7 @@ module.exports = defineConfig({
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: 'on-first-retry',
 	},
-	globalSetup: require.resolve('./support/env.js'),
+	globalSetup: require.resolve('./support/globalSetup.js'),
 	/* Configure projects for major browsers */
 	projects: [
 		{
