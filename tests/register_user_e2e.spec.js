@@ -7,7 +7,6 @@ test.describe('Sign up page', () => {
 		signUpPage,
 		artsPage,
 	}) => {
-		await signUpPage.visit();
 		await signUpPage.inputRandomEmail();
 		await signUpPage.inputRandomPassword();
 		await signUpPage.clickRegister();
