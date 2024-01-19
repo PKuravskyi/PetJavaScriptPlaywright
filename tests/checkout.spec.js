@@ -2,9 +2,9 @@ import { test } from '../support/env';
 
 test.describe('Checkout page', () => {
 	test.beforeEach(
-		async ({ loginEndpoint, artsPage, basketPage, deliveryDetailsPage }) => {
+		async ({ signUpEndpoint, artsPage, basketPage, deliveryDetailsPage }) => {
 			await artsPage.visit();
-			await loginEndpoint.login();
+			await signUpEndpoint.signUpRandomUser();
 			await artsPage.addArtToBasket('Mountain Landscape');
 			await artsPage.addArtToBasket('Baby Zebra with butterfly');
 			await artsPage.addArtToBasket('Astronaut dabbing');
