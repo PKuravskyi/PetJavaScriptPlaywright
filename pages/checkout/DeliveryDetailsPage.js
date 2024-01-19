@@ -1,6 +1,4 @@
 import { faker } from '@faker-js/faker';
-import { expect } from '@playwright/test';
-
 import { BaseCheckoutPage } from './BaseCheckoutPage';
 
 export class DeliveryDetailsPage extends BaseCheckoutPage {
@@ -69,27 +67,27 @@ export class DeliveryDetailsPage extends BaseCheckoutPage {
 	};
 
 	verifyNewlySavedAddress = async () => {
-		expect(await this.savedAddressFirstNameLabel.first().innerText()).toBe(
+		this.expect(await this.savedAddressFirstNameLabel.first().innerText()).toBe(
 			await this.firstNameInput.inputValue()
 		);
 
-		expect(await this.savedAddressLastNameLabel.first().innerText()).toBe(
+		this.expect(await this.savedAddressLastNameLabel.first().innerText()).toBe(
 			await this.lastNameInput.inputValue()
 		);
 
-		expect(await this.savedAddressStreetLabel.first().innerText()).toBe(
+		this.expect(await this.savedAddressStreetLabel.first().innerText()).toBe(
 			await this.streetInput.inputValue()
 		);
 
-		expect(await this.savedAddressPostCodeLabel.first().innerText()).toBe(
+		this.expect(await this.savedAddressPostCodeLabel.first().innerText()).toBe(
 			await this.postCodeInput.inputValue()
 		);
 
-		expect(await this.savedAddressCityLabel.first().innerText()).toBe(
+		this.expect(await this.savedAddressCityLabel.first().innerText()).toBe(
 			await this.cityInput.inputValue()
 		);
 
-		expect(await this.savedAddressCountryLabel.first().innerText()).toEqual(
+		this.expect(await this.savedAddressCountryLabel.first().innerText()).toEqual(
 			await this.countryDropdown.inputValue()
 		);
 	};

@@ -1,6 +1,4 @@
-import { expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-
 import { BaseCheckoutPage } from './BaseCheckoutPage';
 
 export class PaymentPage extends BaseCheckoutPage {
@@ -29,7 +27,7 @@ export class PaymentPage extends BaseCheckoutPage {
 
 	inputDiscountCode = async () => {
 		await this.discountCodeInput.fill(await this.discountCodeLabel.innerText());
-		await expect(await this.discountCodeInput).toHaveValue(
+		await this.expect(await this.discountCodeInput).toHaveValue(
 			await this.discountCodeLabel.innerText()
 		);
 	};
@@ -76,7 +74,7 @@ export class PaymentPage extends BaseCheckoutPage {
 		const discountAmount = (discountPercentage / 100) * totalAmount;
 		const expectedPrice = Math.floor(totalAmount - discountAmount);
 
-		expect(await this.totalIncludingDiscountLabel.innerText()).toBe(
+		this.expect(await this.totalIncludingDiscountLabel.innerText()).toBe(
 			`${expectedPrice}$`
 		);
 	};

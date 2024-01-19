@@ -1,5 +1,3 @@
-import { expect } from '@playwright/test';
-
 import { BaseCheckoutPage } from './BaseCheckoutPage';
 
 export class ThankYouPage extends BaseCheckoutPage {
@@ -12,6 +10,6 @@ export class ThankYouPage extends BaseCheckoutPage {
 	}
 
 	verifySuccessfullPaymentMessage = async () => {
-		await expect(this.thankYouLabel).toBeVisible();
+		await this.expect(this.thankYouLabel).toBeVisible();
 	};
 }

@@ -1,28 +1,27 @@
-import { expect } from '@playwright/test';
-
 import { BasePage } from './BasePage';
 
 export class ArtsPage extends BasePage {
 	constructor(page) {
 		super(page);
-
 		this.sortDropdown = page.locator('.sort-dropdown');
 		this.productCardEls = page.locator('[data-qa="product-card"]');
 	}
 
-	artHandler = async (option, artName) => {
+	visit = async () => await this.page.goto(this.baseUrl);
+
+	#artHandler = async (option, artName) => {
 		const basketBtn = await this.page.locator(
 			`//*[text()="${artName}"]/..//button/div`
 		);
 		await basketBtn.click();
-		await expect(basketBtn).toHaveText(`${option} Basket`);
+		await this.expect(basketBtn).toHaveText(`${option} Basket`);
 	};
 
 	addArtToBasket = async artName =>
-		await this.artHandler('Remove from', artName);
+		await this.#artHandler('Remove from', artName);
 
 	removeArtFromBasket = async artName =>
-		await this.artHandler('Add to', artName);
+		await this.#artHandler('Add to', artName);
 
 	sortBy = async value => {
 		await this.sortDropdown.selectOption({ value: value });
@@ -49,10 +48,10 @@ export class ArtsPage extends BasePage {
 			}
 		}
 
-		expect(isSortedCorrectly).toBeTruthy();
+		this.expect(isSortedCorrectly).toBeTruthy();
 	};
 
 	verifyArtsPresence = async () => {
-		await expect(this.productCardEls.nth(0)).toBeVisible();
+		await this.expect(this.productCardEls.nth(0)).toBeVisible();
 	};
 }

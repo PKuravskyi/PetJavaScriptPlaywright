@@ -3,15 +3,14 @@ import { expect } from '@playwright/test';
 export class BasePage {
 	constructor(page) {
 		this.page = page;
-		this.baseURL = 'http://localhost:2221/';
+		this.expect = expect;
+		this.baseUrl = 'http://localhost:2221/';
 		this.hamburgerMenuBtn = page.locator('.burger-button');
 		this.checkoutBtn = page.getByRole('link', { name: 'Checkout' });
 		this.basketCounterEl = page.locator('[data-qa="header-basket-count"]');
 	}
 
-	goToHomepage = async () => await this.page.goto(this.baseURL);
-
-	goToPage = async page => await this.page.goto(this.baseURL + page);
+	isDesktopViewport = () => this.page.viewportSize().width >= 600;
 
 	getBasketItemsCount = async () => +(await this.basketCounterEl.textContent());
 
@@ -24,7 +23,11 @@ export class BasePage {
 		await element.click();
 	};
 
+	verifyURLMatchesPattern = async url => {
+		await this.expect(this.page).toHaveURL(url);
+	};
+
 	verifyBasketItemsCount = async count => {
-		expect(await this.getBasketItemsCount()).toEqual(count);
+		this.expect(await this.getBasketItemsCount()).toEqual(count);
 	};
 }

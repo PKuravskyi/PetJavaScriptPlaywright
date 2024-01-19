@@ -10,6 +10,8 @@ export class SignUpPage extends BasePage {
 		this.registerBtn = page.locator('//div[text()="Register"]');
 	}
 
+	visit = async () => await this.page.goto(this.baseUrl + '/signup');
+
 	inputRandomEmail = async () => {
 		await this.emailInputEl.fill(faker.internet.email());
 	};
