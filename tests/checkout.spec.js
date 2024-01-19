@@ -1,14 +1,12 @@
-import { test, expect } from '../pages/pageFixtures';
+import { test } from '../support/env';
 
 test.describe('Checkout page', () => {
-	test.beforeEach(async ({ page, artsPage, basketPage, loginPage, signUpPage }) => {
-		const isDesktopViewport = () => page.viewportSize().width >= 600;
-
-		await page.goto('http://localhost:2221');
+	test.beforeEach(async ({ artsPage, basketPage, loginPage, signUpPage }) => {
+		await artsPage.visit();
 		await artsPage.addArtToBasket('Mountain Landscape');
 		await artsPage.addArtToBasket('Baby Zebra with butterfly');
 		await artsPage.addArtToBasket('Astronaut dabbing');
-		if (!isDesktopViewport()) {
+		if (!artsPage.isDesktopViewport()) {
 			await artsPage.openHamburgerMenu();
 		}
 		await artsPage.clickCheckout();
@@ -19,13 +17,15 @@ test.describe('Checkout page', () => {
 		await signUpPage.clickRegister();
 	});
 
-	test('Verify user can go to checkout after registering', async ({ page }) => {
-		await expect(page).toHaveURL(/.*delivery-details/);
+	test('Verify user can go to checkout after registering', async ({
+		deliveryDetailsPage,
+	}) => {
+		await deliveryDetailsPage.verifyURLMatchesPattern(/.*delivery-details/);
 	});
 
 	test('Verify user can fill out delivery details', async ({
-		page,
 		deliveryDetailsPage,
+		paymentPage,
 	}) => {
 		await deliveryDetailsPage.inputRandomFirstName();
 		await deliveryDetailsPage.inputRandomLastName();
@@ -34,7 +34,7 @@ test.describe('Checkout page', () => {
 		await deliveryDetailsPage.inputRandomCity();
 		await deliveryDetailsPage.selectCountry('Ukraine');
 		await deliveryDetailsPage.clickContinueToPayment();
-		await expect(page).toHaveURL(/.*payment/);
+		await paymentPage.verifyURLMatchesPattern(/.*payment/);
 	});
 
 	test('Verify user can save delivery details address', async ({

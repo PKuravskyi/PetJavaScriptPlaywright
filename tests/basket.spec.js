@@ -1,7 +1,7 @@
-import { test } from '../pages/pageFixtures';
+import { test } from '../support/env';
 
 test.describe('Checkout page', () => {
-	test.beforeEach(async ({ page }) => await page.goto('http://localhost:2221'));
+	test.beforeEach(async ({ artsPage }) => await artsPage.visit());
 
 	test('Verify arts can be removed from basket', async ({
 		artsPage,
@@ -10,7 +10,10 @@ test.describe('Checkout page', () => {
 		await artsPage.addArtToBasket('Mountain Landscape');
 		await artsPage.addArtToBasket('Baby Zebra with butterfly');
 		await artsPage.addArtToBasket('Astronaut dabbing');
-		await artsPage.goToPage('basket');
+		if (!artsPage.isDesktopViewport()) {
+			await artsPage.openHamburgerMenu();
+		}
+		await artsPage.clickCheckout();
 		await basketPage.removeCheapestArt();
 		await basketPage.verifyBasketItemsCount(2);
 		await basketPage.removeCheapestArt();

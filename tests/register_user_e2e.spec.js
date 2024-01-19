@@ -1,11 +1,12 @@
-import { test, expect } from '../pages/pageFixtures';
+import { test } from '../support/env';
 
 test.describe('Sign up page', () => {
-	test.beforeEach(async ({ page }) => {
-		await page.goto('http://localhost:2221/signup');
-	});
+	test.beforeEach(async ({ signUpPage }) => await signUpPage.visit());
 
-	test('Verify new user can be registered', async ({ signUpPage, artsPage }) => {
+	test('Verify new user can be registered', async ({
+		signUpPage,
+		artsPage,
+	}) => {
 		await signUpPage.inputRandomEmail();
 		await signUpPage.inputRandomPassword();
 		await signUpPage.clickRegister();

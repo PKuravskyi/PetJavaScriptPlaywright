@@ -1,7 +1,7 @@
-import { test } from '../pages/pageFixtures';
+import { test } from '../support/env';
 
 test.describe('Arts page', () => {
-	test.beforeEach(async ({ page }) => await page.goto('http://localhost:2221'));
+	test.beforeEach(async ({ artsPage }) => await artsPage.visit());
 
 	test('Verify art can be added to basket', async ({ artsPage }) => {
 		await artsPage.verifyBasketItemsCount(0);
