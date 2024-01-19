@@ -60,6 +60,11 @@ export class DeliveryDetailsPage extends BaseCheckoutPage {
 
 	clickSaveAddress = async () => {
 		await this.saveAddressBtn.click();
+
+		// wait until address is saved
+		this.expect(await this.saveAddressBtn).toHaveText(
+			'Save address for next time'
+		);
 	};
 
 	clickContinueToPayment = async () => {
@@ -87,8 +92,8 @@ export class DeliveryDetailsPage extends BaseCheckoutPage {
 			await this.cityInput.inputValue()
 		);
 
-		this.expect(await this.savedAddressCountryLabel.first().innerText()).toEqual(
-			await this.countryDropdown.inputValue()
-		);
+		this.expect(
+			await this.savedAddressCountryLabel.first().innerText()
+		).toEqual(await this.countryDropdown.inputValue());
 	};
 }

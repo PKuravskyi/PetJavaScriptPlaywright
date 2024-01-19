@@ -3,13 +3,13 @@ import { test } from '../support/env';
 test.describe('My account page', () => {
 	test.beforeEach(async ({ artsPage }) => await artsPage.visit());
 
-	test('Verify login via BE', async ({ loginEndpoint, myAccountPage }) => {
+	test('Verify admin login via BE', async ({ loginEndpoint, myAccountPage }) => {
 		await loginEndpoint.login();
 		await myAccountPage.visit();
 		await myAccountPage.verifyUserIsLoggedIn();
 	});
 
-	test('Verify login via BE with mocked request', async ({
+	test('Verify admin login via BE with mocked request', async ({
 		loginEndpoint,
 		myAccountPage,
 	}) => {

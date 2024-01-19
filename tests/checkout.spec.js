@@ -1,38 +1,31 @@
 import { test } from '../support/env';
 
 test.describe('Checkout page', () => {
-	test.beforeEach(async ({ artsPage, basketPage, loginPage, signUpPage }) => {
-		await artsPage.visit();
-		await artsPage.addArtToBasket('Mountain Landscape');
-		await artsPage.addArtToBasket('Baby Zebra with butterfly');
-		await artsPage.addArtToBasket('Astronaut dabbing');
-		if (!artsPage.isDesktopViewport()) {
-			await artsPage.openHamburgerMenu();
+	test.beforeEach(
+		async ({ loginEndpoint, artsPage, basketPage, deliveryDetailsPage }) => {
+			await artsPage.visit();
+			await loginEndpoint.login();
+			await artsPage.addArtToBasket('Mountain Landscape');
+			await artsPage.addArtToBasket('Baby Zebra with butterfly');
+			await artsPage.addArtToBasket('Astronaut dabbing');
+			if (!artsPage.isDesktopViewport()) {
+				await artsPage.openHamburgerMenu();
+			}
+			await artsPage.clickCheckout();
+			await basketPage.clickContinueToCheckout();
+			await deliveryDetailsPage.inputRandomFirstName();
+			await deliveryDetailsPage.inputRandomLastName();
+			await deliveryDetailsPage.inputRandomStreet();
+			await deliveryDetailsPage.inputRandomPostCode();
+			await deliveryDetailsPage.inputRandomCity();
+			await deliveryDetailsPage.selectCountry('Ukraine');
 		}
-		await artsPage.clickCheckout();
-		await basketPage.clickContinueToCheckout();
-		await loginPage.clickRegister();
-		await signUpPage.inputRandomEmail();
-		await signUpPage.inputRandomPassword();
-		await signUpPage.clickRegister();
-	});
-
-	test('Verify user can go to checkout after registering', async ({
-		deliveryDetailsPage,
-	}) => {
-		await deliveryDetailsPage.verifyURLMatchesPattern(/.*delivery-details/);
-	});
+	);
 
 	test('Verify user can fill out delivery details', async ({
 		deliveryDetailsPage,
 		paymentPage,
 	}) => {
-		await deliveryDetailsPage.inputRandomFirstName();
-		await deliveryDetailsPage.inputRandomLastName();
-		await deliveryDetailsPage.inputRandomStreet();
-		await deliveryDetailsPage.inputRandomPostCode();
-		await deliveryDetailsPage.inputRandomCity();
-		await deliveryDetailsPage.selectCountry('Ukraine');
 		await deliveryDetailsPage.clickContinueToPayment();
 		await paymentPage.verifyURLMatchesPattern(/.*payment/);
 	});
@@ -40,12 +33,6 @@ test.describe('Checkout page', () => {
 	test('Verify user can save delivery details address', async ({
 		deliveryDetailsPage,
 	}) => {
-		await deliveryDetailsPage.inputRandomFirstName();
-		await deliveryDetailsPage.inputRandomLastName();
-		await deliveryDetailsPage.inputRandomStreet();
-		await deliveryDetailsPage.inputRandomPostCode();
-		await deliveryDetailsPage.inputRandomCity();
-		await deliveryDetailsPage.selectCountry('Ukraine');
 		await deliveryDetailsPage.clickSaveAddress();
 		await deliveryDetailsPage.verifyNewlySavedAddress();
 	});
@@ -54,12 +41,6 @@ test.describe('Checkout page', () => {
 		deliveryDetailsPage,
 		paymentPage,
 	}) => {
-		await deliveryDetailsPage.inputRandomFirstName();
-		await deliveryDetailsPage.inputRandomLastName();
-		await deliveryDetailsPage.inputRandomStreet();
-		await deliveryDetailsPage.inputRandomPostCode();
-		await deliveryDetailsPage.inputRandomCity();
-		await deliveryDetailsPage.selectCountry('Ukraine');
 		await deliveryDetailsPage.clickContinueToPayment();
 		await paymentPage.inputDiscountCode();
 		await paymentPage.clickSubmitDiscount();
@@ -71,12 +52,6 @@ test.describe('Checkout page', () => {
 		paymentPage,
 		thankYouPage,
 	}) => {
-		await deliveryDetailsPage.inputRandomFirstName();
-		await deliveryDetailsPage.inputRandomLastName();
-		await deliveryDetailsPage.inputRandomStreet();
-		await deliveryDetailsPage.inputRandomPostCode();
-		await deliveryDetailsPage.inputRandomCity();
-		await deliveryDetailsPage.selectCountry('Ukraine');
 		await deliveryDetailsPage.clickContinueToPayment();
 		await paymentPage.inputCreditCardOwner();
 		await paymentPage.inputCreditCardNumber();
