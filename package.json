@@ -4,7 +4,8 @@
 	"description": "Pet repository for practicing testing with JavaScript and Playwright",
 	"main": "index.js",
 	"scripts": {
-		"tests": "playwright test"
+		"tests": "playwright test",
+		"tests:ui": "playwright test --ui"
 	},
 	"keywords": [],
 	"author": "Pavlo Kuravskyi",
