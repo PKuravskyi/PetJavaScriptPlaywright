@@ -19,7 +19,7 @@ module.exports = defineConfig({
 	/* Retry on CI only */
 	retries: process.env.CI ? 2 : 0,
 	/* Opt out of parallel tests on CI. */
-	workers: process.env.CI ? 10 : undefined,
+	workers: process.env.CI ? 3 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'allure-playwright',
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -30,6 +30,8 @@ module.exports = defineConfig({
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: 'on-first-retry',
 	},
+	// Path to the global setup file. This file will be required 
+	// and run only once before all the tests. It must export a single function.
 	globalSetup: require.resolve('./support/globalSetup.js'),
 	/* Configure projects for major browsers */
 	projects: [
