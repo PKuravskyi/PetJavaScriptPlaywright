@@ -1,4 +1,4 @@
-import { test } from '../support/env';
+import { test } from '../../support/env';
 
 test.describe('Arts page', () => {
 	test.beforeEach(async ({ artsPage }) => await artsPage.visit());

@@ -1,4 +1,4 @@
-import { test } from '../support/env';
+import { test } from '../../support/env';
 
 test.describe('Checkout page', () => {
 	test.beforeEach(
