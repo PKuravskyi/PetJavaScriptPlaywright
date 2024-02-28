@@ -30,7 +30,7 @@ module.exports = defineConfig({
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: 'on-first-retry',
 	},
-	// Path to the global setup file. This file will be required 
+	// Path to the global setup file. This file will be required
 	// and run only once before all the tests. It must export a single function.
 	globalSetup: require.resolve('./support/globalSetup.js'),
 	/* Configure projects for major browsers */

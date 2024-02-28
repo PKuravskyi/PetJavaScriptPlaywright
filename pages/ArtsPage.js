@@ -5,6 +5,7 @@ export class ArtsPage extends BasePage {
 		super(page);
 		this.sortDropdown = page.locator('.sort-dropdown');
 		this.productCardEls = page.locator('[data-qa="product-card"]');
+		this.artsPrices = page.locator('.product-price');
 	}
 
 	visit = async () => await this.page.goto(this.baseUrl);
@@ -17,38 +18,37 @@ export class ArtsPage extends BasePage {
 		await this.expect(basketBtn).toHaveText(`${option} Basket`);
 	};
 
-	addArtToBasket = async artName =>
-		await this.#artHandler('Remove from', artName);
+	#getArtPrice = async elIdx => {
+		return parseInt(await this.artsPrices.nth(elIdx).textContent());
+	};
 
-	removeArtFromBasket = async artName =>
+	addArtToBasket = async artName => {
+		await this.#artHandler('Remove from', artName);
+	};
+
+	removeArtFromBasket = async artName => {
 		await this.#artHandler('Add to', artName);
+	};
 
 	sortBy = async value => {
 		await this.sortDropdown.selectOption({ value: value });
 	};
 
 	verifyArtsSortedBy = async sortType => {
-		const artsPrices = [];
-		let isSortedCorrectly = true;
-
-		for (let i = 1; i <= artsPrices.length; i++) {
+		for (let i = 0; i < (await this.artsPrices.count()) - 1; i++) {
 			switch (sortType) {
 				case 'price-asc':
-					if (artsPrices[i] > artsPrices[i + 1]) {
-						isSortedCorrectly = false;
-						break;
-					}
+					this.expect(
+						(await this.#getArtPrice(i)) <= (await this.#getArtPrice(i + 1))
+					).toBeTruthy();
 					break;
 				case 'price-desc':
-					if (artsPrices[i] < artsPrices[i + 1]) {
-						isSortedCorrectly = false;
-						break;
-					}
+					this.expect(
+						(await this.#getArtPrice(i)) >= (await this.#getArtPrice(i + 1))
+					).toBeTruthy();
 					break;
 			}
 		}
-
-		this.expect(isSortedCorrectly).toBeTruthy();
 	};
 
 	verifyArtsPresence = async () => {
